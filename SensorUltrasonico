@@ -1,0 +1,47 @@
+const int trigPin = 2;//Definir el pin de trigger del sensor ultrasónico
+const int echoPin = 4;//Definir el pin del eco
+
+//Define sound speed in cm/us
+#define SOUND_SPEED 0.034
+#define CM_TO_MT 0.01
+
+//Definir variables
+long duration;
+float distanceCm;
+float distanciaMetros;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(115200);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  duration = pulseIn(echoPin, HIGH);
+
+  distanceCm = duration * SOUND_SPEED/2;
+
+  distanciaMetros = (distanceCm * 1)/100;
+
+  Serial.print("Distance (cm): ");
+  Serial.println(distanceCm);
+  //for(int i=0; i<distanciaMetros; i++ ){
+   //Serial.print("-"); 
+  //}
+
+  Serial.print("Distance (mt): ");
+  Serial.println(distanciaMetros);
+
+  delay(10000);
+
+}
