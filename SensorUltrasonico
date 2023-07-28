@@ -1,47 +1,56 @@
-const int trigPin = 2;//Definir el pin de trigger del sensor ultrasónico
-const int echoPin = 4;//Definir el pin del eco
+/*Melanie Arianna Martinez Vera
+y Oscar Luna Perez
+Practica 1 con Arduino
+Sensor ultrasónico que muestra la distancia en centimetros y metros en el monitor serial*/
+
+//#include <Wire.h>
+//#include <LiquidCrystal_I2C.h>
+
+const int Trig = 2;
+const int Echo = 4;
+
+//LiquidCrystal_I2C lcd (0x3F, 16, 2);
 
 //Define sound speed in cm/us
 #define SOUND_SPEED 0.034
 #define CM_TO_MT 0.01
 
 //Definir variables
-long duration;
-float distanceCm;
+long duracion;
+float distanciaCm;
 float distanciaMetros;
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
-
+  pinMode(Trig, OUTPUT);
+  pinMode(Echo, INPUT);
+  //lcd.init();
+  //lcd.backlight();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  digitalWrite(trigPin, LOW);
+  //lcd.setCursor(0, 1);
+  digitalWrite(Trig, LOW);
   delayMicroseconds(2);
 
-  digitalWrite(trigPin, HIGH);
+  digitalWrite(Trig, HIGH);
   delayMicroseconds(10);
-  digitalWrite(trigPin, LOW);
+  digitalWrite(Trig, LOW);
 
-  duration = pulseIn(echoPin, HIGH);
+  duration = pulseIn(Echo, HIGH);
 
-  distanceCm = duration * SOUND_SPEED/2;
+  distanciaCm = duracion * SOUND_SPEED/2;
 
-  distanciaMetros = (distanceCm * 1)/100;
+  distanciaMetros = (distanciaCm * 1)/100;
 
-  Serial.print("Distance (cm): ");
-  Serial.println(distanceCm);
-  //for(int i=0; i<distanciaMetros; i++ ){
-   //Serial.print("-"); 
-  //}
+  Serial.print("Distancia en (cm): ");
+  Serial.println(distanciaCm);
 
-  Serial.print("Distance (mt): ");
+  Serial.print("Distancia en (mt): ");
   Serial.println(distanciaMetros);
 
-  delay(10000);
+  delay(1000);
 
 }
